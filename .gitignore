@@ -6,3 +6,6 @@
 
 build/
 example/android/app/google-services.json
+/.vscode
+.fvm
+

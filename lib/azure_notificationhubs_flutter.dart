@@ -10,17 +10,17 @@ class AzureNotificationhubsFlutter {
   static const MethodChannel _channel =
       const MethodChannel('azure_notificationhubs_flutter');
 
-  MessageHandler _onMessage;
-  MessageHandler _onResume;
-  MessageHandler _onLaunch;
-  TokenHandler _onToken;
+  MessageHandler? _onMessage;
+  MessageHandler? _onResume;
+  MessageHandler? _onLaunch;
+  TokenHandler? _onToken;
 
   /// Sets up [MessageHandler] for incoming messages.
   void configure({
-    MessageHandler onMessage,
-    MessageHandler onResume,
-    MessageHandler onLaunch,
-    TokenHandler onToken
+    MessageHandler? onMessage,
+    MessageHandler? onResume,
+    MessageHandler? onLaunch,
+    TokenHandler? onToken
   }) {
     _onMessage = onMessage;
     _onLaunch = onLaunch;
@@ -33,25 +33,25 @@ class AzureNotificationhubsFlutter {
   Future<dynamic> _handleMethod(MethodCall call) async {
     switch (call.method) {
       case "onToken":
-        return _onToken(call.arguments);
+        return _onToken!(call.arguments);
       case "onMessage":
         if (Platform.isAndroid) {
           Map<String, dynamic> args = Map<String, dynamic>.from(call.arguments);
-          return _onMessage(Map<String, dynamic>.from(args['data']));
+          return _onMessage!(Map<String, dynamic>.from(args['data']));
         }
-        return _onMessage(call.arguments.cast<String, dynamic>());
+        return _onMessage!(call.arguments.cast<String, dynamic>());
       case "onLaunch":
         if (Platform.isAndroid) {
           Map<String, dynamic> args = Map<String, dynamic>.from(call.arguments);
-          return _onMessage(Map<String, dynamic>.from(args['data']));
+          return _onMessage!(Map<String, dynamic>.from(args['data']));
         }
-        return _onLaunch(call.arguments.cast<String, dynamic>());
+        return _onLaunch!(call.arguments.cast<String, dynamic>());
       case "onResume":
         if (Platform.isAndroid) {
           Map<String, dynamic> args = Map<String, dynamic>.from(call.arguments);
-          return _onMessage(Map<String, dynamic>.from(args['data']));
+          return _onMessage!(Map<String, dynamic>.from(args['data']));
         }
-        return _onResume(call.arguments.cast<String, dynamic>());
+        return _onResume!(call.arguments.cast<String, dynamic>());
       default:
         throw UnsupportedError("Unrecognized JSON message");
     }
